@@ -1,0 +1,24 @@
+﻿version: '3.9'
+
+networks:
+  nest-network:
+    name: nest-network
+
+volumes:
+  nest-db-data:
+    name: nest-db-data
+
+services:
+    postgres:
+        container_name: nest-postgres
+        image: postgres:latest
+        environment:
+            POSTGRES_USER: someuser
+            POSTGRES_PASSWORD: somepassword
+            POSTGRES_DB: NestJs
+            PGDATA: /var/lib/postgresql/data/pgdata
+        volumes:
+            - nest-db-data:/var/lib/postgresql/data/pgdata
+        ports:
+            - "45432:5432"
+        restart: unless-stopped
