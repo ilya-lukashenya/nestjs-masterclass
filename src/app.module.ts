@@ -21,11 +21,12 @@ import { MetaOptionsModule } from './meta-options/meta-options.module';
       useFactory: () => ({
         type: 'postgres',
         host: 'localhost',
-        entities: [User],
+        //entities: [User],
         synchronize: true,
         port: 15432,
         username: 'someuser',
         password: 'somepassword',
+        autoLoadEntities: true,
         database: 'NestMasterclass',
       }),
     }),

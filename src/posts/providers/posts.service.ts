@@ -1,11 +1,14 @@
+import { PatchPostDto } from './../dtos/patch-post.dto';
+import { TagsService } from './../../tags/providers/tags.service';
 import { CreatePostDto } from '../dtos/create-post.dto';
 import { Injectable } from '@nestjs/common';
-import { MetaOptionsService } from './../../meta-options/meta-options.service';
 import { UsersService } from 'src/users/providers/users.service';
 import { Repository } from 'typeorm';
 import { Post } from '../post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MetaOption } from 'src/meta-options/meta-option.entity';
+import { User } from 'src/users/user.entity';
+import { waitForDebugger } from 'inspector';
 
 @Injectable()
 export class PostsService {
@@ -15,13 +18,18 @@ export class PostsService {
     @InjectRepository(Post)
     private readonly postsRepository: Repository<Post>,
 
-    @InjectRepository(MetaOption)
-    private readonly metaOptionsRepository: Repository<MetaOption>,
+    private readonly tagsService: TagsService,
   ) {}
 
   public async create(createPostDto: CreatePostDto) {
+    let author = await this.usersService.findOneById(createPostDto.authorId);
+
+    let tags = await this.tagsService.findMultipleTags(createPostDto.tags);
+
     let post = this.postsRepository.create({
       ...createPostDto,
+      author: author,
+      tags: tags,
     });
 
     return await this.postsRepository.save(post);
@@ -31,6 +39,7 @@ export class PostsService {
     let posts = await this.postsRepository.find({
       relations: {
         metaOptions: true,
+        author: true,
       },
     });
 
@@ -38,17 +47,20 @@ export class PostsService {
   }
 
   public async delete(id: number) {
-    let post = await this.postsRepository.findOneBy({ id });
+    await this.postsRepository.delete(id);
 
-    let inversePost = await this.metaOptionsRepository.find({
-      where: { id: post.metaOptions.id },
-      relations: {
-        post: true,
-      },
+    return { deleted: true, id };
+  }
+
+  public async update(patchPostDto: PatchPostDto) {
+    let tags = await this.tagsService.findMultipleTags(patchPostDto.tags);
+
+    let post = await this.postsRepository.findOneBy({
+      id: patchPostDto.id,
     });
 
-    console.log(inversePost);
+    post.tags = tags;
 
-    return { deleted: true, id: post.id };
+    return await this.postsRepository.save(post);
   }
 }

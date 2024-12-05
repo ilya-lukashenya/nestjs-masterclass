@@ -3,6 +3,7 @@ import {
   IsArray,
   IsEnum,
   IsISO8601,
+  IsInt,
   IsJSON,
   IsNotEmpty,
   IsOptional,
@@ -13,7 +14,6 @@ import {
   Min,
   MinLength,
   ValidateNested,
-  IsInt
 } from 'class-validator';
 
 import { CreatePostMetaOptionsDto } from '../../meta-options/dtos/create-post-meta-options.dto';
@@ -99,25 +99,23 @@ export class CreatePostDto {
   publishOn?: Date;
 
   @ApiPropertyOptional({
-    description: 'Array of tags passed as string values',
-    example: ['nestjs', 'typescript'],
+    description: 'Array of ids of tags passed as integers in an array',
+    example: [1, 2],
   })
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })
-  @MinLength(3, { each: true })
-  tags?: string[];
+  @IsInt({ each: true })
+  tags?: number[];
 
   @ApiPropertyOptional({
-    type: 'object',
-    properties: {
-      metavalue: {
-        type: 'string',
-        description: 'The metaValue is a JSON string',
-        example: '{"sidebarEnabled": true}',
+      type: 'object',
+      properties: {
+        metavalue: {
+          type: 'string',
+          description: 'The metaValue is a JSON string',
+          example: '{"sidebarEnabled": true,}',
+        },
       },
-    },
-    additionalProperties: false, 
   })
   @IsOptional()
   @ValidateNested({ each: true })
