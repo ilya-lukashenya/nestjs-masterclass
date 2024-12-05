@@ -1,24 +1,24 @@
 ﻿version: '3.9'
 
 networks:
-  nest-network:
-    name: nest-network
+  nest-masterclass-network:
+    name: nest-masterclass-network
 
 volumes:
-  nest-db-data:
-    name: nest-db-data
+  nest-masterclass-db-data:
+    name: nest-masterclass-db-data
 
 services:
     postgres:
-        container_name: nest-postgres
+        container_name: nest-masterclass-postgres
         image: postgres:latest
         environment:
             POSTGRES_USER: someuser
             POSTGRES_PASSWORD: somepassword
-            POSTGRES_DB: NestJs
+            POSTGRES_DB: NestMasterclass
             PGDATA: /var/lib/postgresql/data/pgdata
         volumes:
-            - nest-db-data:/var/lib/postgresql/data/pgdata
+            - nest-masterclass-db-data:/var/lib/postgresql/data/pgdata
         ports:
-            - "45432:5432"
+            - "15432:5432"
         restart: unless-stopped
