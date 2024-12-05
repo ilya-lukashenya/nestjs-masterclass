@@ -20,7 +20,6 @@ export class PostsService {
   ) {}
 
   public async create(createPostDto: CreatePostDto) {
-    // Create the post
     let post = this.postsRepository.create({
       ...createPostDto,
     });
@@ -28,11 +27,7 @@ export class PostsService {
     return await this.postsRepository.save(post);
   }
 
-  /**
-   * Method to find all posts
-   */
   public async findAll(userId: string) {
-    // find all posts
     let posts = await this.postsRepository.find({
       relations: {
         metaOptions: true,

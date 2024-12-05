@@ -51,7 +51,6 @@ export class PostsController {
     console.log(patchPostsDto);
   }
 
-
   @Delete()
   public deletePost(@Query('id', ParseIntPipe) id: number) {
     return this.postsService.delete(id);
