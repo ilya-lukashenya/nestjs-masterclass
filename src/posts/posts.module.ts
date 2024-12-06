@@ -8,6 +8,7 @@ import { TagsModule } from 'src/tags/tags.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/user.entity';
 import { UsersModule } from 'src/users/users.module';
+import { TagsService } from 'src/tags/providers/tags.service';
 
 @Module({
   controllers: [PostsController],
