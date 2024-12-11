@@ -22,10 +22,10 @@ import profileConfig from './config/profile.config';
     UsersCreateManyProvider,
     CreateUserProvider,
     FindOneUserByEmailProvider,
-    {
-      provide: APP_GUARD,
-      useClass: AccessTokenGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AccessTokenGuard,
+    // },
   ],
   exports: [UsersService],
   imports: [

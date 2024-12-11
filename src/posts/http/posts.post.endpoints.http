@@ -1,5 +1,6 @@
 POST http://localhost:3000/posts
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImlhdCI6MTczMzg3NDkxMywiZXhwIjoxNzMzOTYxMzEzLCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.kld5p3t5Xu49e5fZF0R_R5Fj-cjuMTIh_Ayl8QqFAdE
 
 {
   "title": "What's new with NestJS",
@@ -14,6 +15,5 @@ Content-Type: application/json
   "metaOptions" : {
       "metaValue": "{\"sidebarEnabled\": true, \"footerActive\":true}"
     },
-  "authorId":1,
-  "tags": [1,2]
+  "tags": []
 }

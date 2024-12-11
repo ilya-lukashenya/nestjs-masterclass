@@ -53,6 +53,7 @@ export class UsersController {
       'The position of the page number that you want the API to return',
     example: 1,
   })
+  
   public getUsers(
     @Param() getUserParamDto: GetUsersParamDto,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,

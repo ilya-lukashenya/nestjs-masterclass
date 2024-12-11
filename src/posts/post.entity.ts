@@ -1,7 +1,6 @@
 import {
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -72,7 +71,7 @@ export class Post {
   featuredImageUrl?: string;
 
   @Column({
-    type: 'timestamp',
+    type: 'timestamp', // 'datetime' in mysql
     nullable: true,
   })
   publishOn?: Date;
