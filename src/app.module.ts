@@ -63,10 +63,10 @@ const ENV = process.env.NODE_ENV;
   controllers: [AppController],
   providers: [
     AppService,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthenticationGuard,
-    // },
+    {
+      provide: APP_GUARD,
+      useClass: AuthenticationGuard,
+    },
     AccessTokenGuard,
   ],
 })

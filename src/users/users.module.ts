@@ -12,6 +12,8 @@ import { User } from './user.entity';
 import { UsersController } from './users.controller';
 import { UsersCreateManyProvider } from './providers/users-create-many.provider';
 import { UsersService } from './providers/users.service';
+import { FindOneByGoogleIdProvider } from './providers/find-one-by-google-id.provider';
+import { CreateGoogleUserProvider } from './providers/create-google-user.provider';
 import jwtConfig from 'src/auth/config/jwt.config';
 import profileConfig from './config/profile.config';
 
@@ -22,18 +24,14 @@ import profileConfig from './config/profile.config';
     UsersCreateManyProvider,
     CreateUserProvider,
     FindOneUserByEmailProvider,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AccessTokenGuard,
-    // },
+    FindOneByGoogleIdProvider,
+    CreateGoogleUserProvider,
   ],
   exports: [UsersService],
   imports: [
     TypeOrmModule.forFeature([User]),
     ConfigModule.forFeature(profileConfig),
     forwardRef(() => AuthModule),
-    ConfigModule.forFeature(jwtConfig),
-    JwtModule.registerAsync(jwtConfig.asProvider()),
   ],
 })
 export class UsersModule {}
