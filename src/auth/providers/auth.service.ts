@@ -9,18 +9,11 @@ import { RefreshTokenDto } from '../dtos/refresh-token.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    // Injecting UserService
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
 
-    /**
-     * Inject the signInProvider
-     */
     private readonly signInProvider: SignInProvider,
 
-    /**
-     * Inject refreshTokensProvider
-     */
     private readonly refreshTokensProvider: RefreshTokensProvider,
   ) {}
 
