@@ -45,20 +45,17 @@ import {
           given_name: firstName,
           family_name: lastName,
         } = loginTicket.getPayload();
-        const user = await this.usersService.findOneByGoogleId(googleId);
+        let user = await this.usersService.findOneByGoogleId(googleId);
         console.log(loginTicket);
-        if (user) {
-          return await this.generateTokensProvider.generateTokens(user);
-        } else {
-          const newUser = await this.usersService.createGoogleUser({
+        if (!user) {
+          user = await this.usersService.createGoogleUser({
             email: email,
-            firstName: firstName,
+            firstName: firstName, 
             lastName: lastName,
             googleId: googleId,
           });
-          return await this.generateTokensProvider.generateTokens(newUser);
         }
-
+        return await this.generateTokensProvider.generateTokens(user);
       } catch (error) {
         throw new UnauthorizedException(error);
       }
