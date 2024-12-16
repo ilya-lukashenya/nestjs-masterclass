@@ -24,4 +24,5 @@ export default Joi.object({
   SMTP_USERNAME: Joi.string().required(),
   SMTP_PASSWORD: Joi.string().required(),
   FILE_STORAGE: Joi.string().required(),
+  SAVE_PATH: Joi.string().required(),
 });

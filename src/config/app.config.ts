@@ -12,4 +12,5 @@ export default registerAs('appConfig', () => ({
   smtpUsername: process.env.SMTP_USERNAME,
   smtpPassword: process.env.SMTP_PASSWORD,
   fileStorage: process.env.FILE_STORAGE,
+  savePath: process.env.SAVE_PATH,
 }));

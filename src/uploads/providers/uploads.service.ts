@@ -58,11 +58,11 @@ export class UploadsService {
     }
 
     try {
-      await this.uploadLocalProvider.fileupload(file);
+      const filePath = await this.uploadLocalProvider.fileupload(file);
 
       const uploadFile: UploadFile = {
         name: file.originalname,
-        path: `C:\\Projects\\nestjs-masterclass\\src\\uploads\\savedUploads\\${file.originalname}`,
+        path: filePath,
         type: fileTypes.IMAGE,
         mime: file.mimetype,
         size: file.size,

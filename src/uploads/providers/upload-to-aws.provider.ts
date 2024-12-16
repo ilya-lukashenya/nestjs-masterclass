@@ -3,7 +3,6 @@ import * as path from 'path';
 import { Injectable, RequestTimeoutException } from '@nestjs/common';
 
 import { ConfigService } from '@nestjs/config';
-import { Express } from 'express';
 import { S3 } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 
