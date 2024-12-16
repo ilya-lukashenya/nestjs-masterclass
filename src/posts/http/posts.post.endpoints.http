@@ -1,11 +1,11 @@
 POST http://localhost:3000/posts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsImVtYWlsIjoibWlzdGVyYnVtc3NzQGdtYWlsLmNvbSIsImlhdCI6MTczMzk4NDc2MiwiZXhwIjoxNzMzOTg4MzYyLCJhdWQiOiJsb2NhbGhvc3Q6MzAwMCIsImlzcyI6ImxvY2FsaG9zdDozMDAwIn0.H6s8vVqQU8dVNnjP-unyBu_31oVdtm-X4Z5VqX1ax28
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoiaWx5YUBnbWFpbC5jb20iLCJpYXQiOjE3MzQzMzExNDgsImV4cCI6MTczNDMzNDc0OCwiYXVkIjoibG9jYWxob3N0OjMwMDAiLCJpc3MiOiJsb2NhbGhvc3Q6MzAwMCJ9.fF0URUKus9q3jssmWUtM7mJkpXkas-Kt4M0qalwIYT0
 
 {
   "title": "What's new with NestJS",
   "postType": "post",
-  "slug": "new-with-nestjs-4new1234asdasdassmmd",
+  "slug": "new-with-nestjs-4new1234asdasdassmmdnew",
   "status": "draft",
   "content": "test content",
   "schema": "{\r\n \"@context\": \"https:\/\/schema.org\",\r\n \"@type\": \"Person\"\r\n }",
