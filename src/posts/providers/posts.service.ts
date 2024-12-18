@@ -4,7 +4,6 @@ import {
   Injectable,
   RequestTimeoutException,
 } from '@nestjs/common';
-import { UsersService } from 'src/users/providers/users.service';
 import { CreatePostDto } from '../dtos/create-post.dto';
 import { Repository } from 'typeorm';
 import { Post } from '../post.entity';
