@@ -26,11 +26,6 @@ export class PostsService {
     @InjectRepository(Post)
     private readonly postsRepository: Repository<Post>,
     /**
-     * inject metaOptionsRepository
-     */
-    @InjectRepository(MetaOption)
-    private readonly metaOptionsRepository: Repository<MetaOption>,
-    /**
      * Inject TagsService
      */
     private readonly tagsService: TagsService,

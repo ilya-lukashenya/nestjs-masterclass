@@ -12,6 +12,9 @@ import { postType } from '../enums/postType.enum';
 import { postStatus } from '../enums/postStatus.enum';
 import { ActiveUserData } from 'src/auth/interfaces/active-user-data.interface';
 import { emit } from 'process';
+import { TagsService } from 'src/tags/providers/tags.service';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
+import { UsersService } from 'src/users/providers/users.service';
 
 describe('PostsService', () => {
   let service: PostsService;
@@ -51,6 +54,8 @@ describe('PostsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PostsService,
+        {provide: PaginationProvider, useValue: {}},
+        {provide: TagsService, useValue: {}},
         { provide: DataSource, useValue: {} },
         { provide: getRepositoryToken(Post), useValue: {} },
         { provide: CreatePostProvider, useValue: mockCreatePostsProvider },
