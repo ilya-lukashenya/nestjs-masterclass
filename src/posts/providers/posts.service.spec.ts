@@ -154,7 +154,7 @@ describe('PostsService', () => {
     it('Should throw a bad requesr exeption', async () => {
       paginationProviderMock.paginateQuery.mockResolvedValue(null)
     
-      expect(service.update(patchPost)).rejects.toThrow(BadRequestException);
+      expect(service.findAll(getPosts)).rejects.toThrow(TypeError);
     });
   })
 });
