@@ -47,8 +47,7 @@ export class PostsService {
   }
 
   public async findAll(
-    postQuery: GetPostsDto,
-    userId: string,
+    postQuery: GetPostsDto
   ): Promise<Paginated<Post>> {
     let posts = await this.paginationProvider.paginateQuery(
       {

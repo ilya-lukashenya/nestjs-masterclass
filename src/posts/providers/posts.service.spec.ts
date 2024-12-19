@@ -15,10 +15,35 @@ import { emit } from 'process';
 import { TagsService } from 'src/tags/providers/tags.service';
 import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 import { UsersService } from 'src/users/providers/users.service';
+import { Tag } from 'src/tags/tag.entity';
+import { Repository } from 'typeorm';
+import { RequestTimeoutException } from '@nestjs/common';
+
+type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
+const createMockRepository = <T = any>(): MockRepository<T> => ({
+  findOne: jest.fn(),
+  find: jest.fn(),
+  create: jest.fn(),
+  save: jest.fn(),
+  delete: jest.fn(),
+});
+
+const patchPost = {
+  id: 1,
+};
+
+const tagsServiceMock = {
+  findMultipleTags: jest.fn(),
+};
+
+const mockTags = [
+  { id: 1, name: 'javascript', slug: 'javascript', description: 'All posts javascript' },
+  { id: 3, name: 'c--', slug: 'ccc', description: 'All posts c#' },
+]; 
 
 describe('PostsService', () => {
   let service: PostsService;
-
+  let tagService: TagsService;
   beforeEach(async () => {
     const mockCreatePostsProvider: Partial<CreatePostProvider> = {
       create: (createPostDto: CreatePostDto, activeUserDto: ActiveUserData) =>
@@ -55,7 +80,7 @@ describe('PostsService', () => {
       providers: [
         PostsService,
         {provide: PaginationProvider, useValue: {}},
-        {provide: TagsService, useValue: {}},
+        { provide: TagsService, useValue: tagsServiceMock },
         { provide: DataSource, useValue: {} },
         { provide: getRepositoryToken(Post), useValue: {} },
         { provide: CreatePostProvider, useValue: mockCreatePostsProvider },
@@ -97,4 +122,16 @@ describe('PostsService', () => {
       expect(post).toBeDefined();
     });
   });
+
+  describe('update', () =>{
+    it('Should be defined', () => {
+      expect(service.update).toBeDefined();
+    });
+    
+    it('Should throw a conflict exeption', async () => {
+      tagsServiceMock.findMultipleTags.mockRejectedValue('Tags don`t exist'); 
+    
+      expect(service.update(patchPost)).rejects.toThrow(RequestTimeoutException);
+    });
+  })
 });

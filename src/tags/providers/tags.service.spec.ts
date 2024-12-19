@@ -7,8 +7,10 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
   findOne: jest.fn(),
+  find: jest.fn(),
   create: jest.fn(),
   save: jest.fn(),
+  delete: jest.fn(),
 });
 
 
@@ -24,6 +26,12 @@ describe('TagService', () => {
     featuredImage:'http://localhost.com/images/image1.jpg',
   };
 
+  const tagNumber = 3;
+
+  const mockTags = [
+    { id: 1, name: 'javascript', slug: 'javascript', description: 'All posts javascript' },
+    { id: 3, name: 'c--', slug: 'ccc', description: 'All posts c#' },
+  ]; 
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -51,6 +59,18 @@ describe('TagService', () => {
 
         expect(tagsRepository.create).toHaveBeenCalledWith(tag);
         expect(tagsRepository.save).toHaveBeenCalledWith(tag);
+      });
+    });
+  });
+
+  describe('delete', () => {
+    describe('When Tags Exist', () => {
+      it('Should delete tag', async () => {
+        tagsRepository.delete.mockReturnValue(tagNumber);
+
+        const newTags = await service.delete(tagNumber);
+
+        expect(tagsRepository.delete).toHaveBeenCalledWith(tagNumber);
       });
     });
   });

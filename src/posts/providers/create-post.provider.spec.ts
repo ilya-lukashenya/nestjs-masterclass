@@ -50,6 +50,7 @@ describe('CreatePostProvider', () => {
     password: 'Password123#',
   };
 
+
   const mockTags = [
     { id: 1, name: 'javascript', slug: 'javascript', description: 'All posts javascript' },
     { id: 3, name: 'c--', slug: 'ccc', description: 'All posts c#' },
