@@ -17,7 +17,7 @@ import { PaginationProvider } from 'src/common/pagination/providers/pagination.p
 import { UsersService } from 'src/users/providers/users.service';
 import { Tag } from 'src/tags/tag.entity';
 import { Repository } from 'typeorm';
-import { RequestTimeoutException } from '@nestjs/common';
+import { BadRequestException, RequestTimeoutException } from '@nestjs/common';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
@@ -36,10 +36,21 @@ const tagsServiceMock = {
   findMultipleTags: jest.fn(),
 };
 
+const paginationProviderMock = {
+  paginateQuery: jest.fn()
+}
+
 const mockTags = [
   { id: 1, name: 'javascript', slug: 'javascript', description: 'All posts javascript' },
   { id: 3, name: 'c--', slug: 'ccc', description: 'All posts c#' },
-]; 
+];
+
+const getPosts = {
+  staetDate: new Date('2024-12-16T07:46:32+0000'),
+  endDate: new Date('2024-12-16T07:46:32+0000'),
+  limit: 10,
+  page: 1
+}
 
 describe('PostsService', () => {
   let service: PostsService;
@@ -127,11 +138,23 @@ describe('PostsService', () => {
     it('Should be defined', () => {
       expect(service.update).toBeDefined();
     });
-    
-    it('Should throw a conflict exeption', async () => {
+
+    it('Should throw a timeout exeption', async () => {
       tagsServiceMock.findMultipleTags.mockRejectedValue('Tags don`t exist'); 
     
       expect(service.update(patchPost)).rejects.toThrow(RequestTimeoutException);
+    });
+  })
+
+  describe('findAll', () => {
+    it('Should be defined', () => {
+      expect(service.findAll).toBeDefined();
+    });
+
+    it('Should throw a bad requesr exeption', async () => {
+      paginationProviderMock.paginateQuery.mockResolvedValue(null)
+    
+      expect(service.update(patchPost)).rejects.toThrow(BadRequestException);
     });
   })
 });

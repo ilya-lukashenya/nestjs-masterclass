@@ -8,6 +8,7 @@ import { postStatus } from '../enums/postStatus.enum';
 import { UsersService } from 'src/users/providers/users.service';
 import { TagsService } from 'src/tags/providers/tags.service';
 import { ConflictException } from '@nestjs/common';
+import { PaginationProvider } from 'src/common/pagination/providers/pagination.provider';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
@@ -60,6 +61,7 @@ describe('CreatePostProvider', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         CreatePostProvider,
+        { provide: PaginationProvider, useValue: {}},
         { provide: UsersService, useValue: usersServiceMock },
         { provide: TagsService, useValue: tagsServiceMock },
         { provide: getRepositoryToken(Post), useValue: createMockRepository() },
