@@ -19,7 +19,8 @@ const tagsServiceMock = {
     create: jest.fn(),
     delete: jest.fn(),
     findMultipleTags: jest.fn(),
-  };
+    softRemove: jest.fn()
+};
 
 
 describe('TagsController', () => {
@@ -76,6 +77,18 @@ describe('TagsController', () => {
         await controller.delete(tagNumber);
 
         expect(tagsServiceMock.delete).toHaveBeenCalledWith(tagNumber);
+      });
+    });
+  });
+
+  describe('softDelete', () => {
+    describe('When Tags Exist', () => {
+      it('Should soft delete tag', async () => {
+        tagsServiceMock.softRemove.mockReturnValue(tagNumber);
+
+        await controller.softDelete(tagNumber);
+
+        expect(tagsServiceMock.softRemove).toHaveBeenCalledWith(tagNumber);
       });
     });
   });
