@@ -85,7 +85,7 @@ describe('CreatePostProvider', () => {
         usersServiceMock.findOneById.mockResolvedValue(user);
         tagsServiceMock.findMultipleTags.mockResolvedValue(mockTags); 
 
-        const newPost = await provider.create(post, { sub: 1, email: 'mark@doe.com' });
+        await provider.create(post, { sub: 1, email: 'mark@doe.com' });
 
         expect(postsRepository.create).toHaveBeenCalledWith({
           ...post,

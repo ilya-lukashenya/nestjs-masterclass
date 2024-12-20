@@ -1,8 +1,10 @@
 import { Repository } from 'typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TagsService } from 'src/tags/providers/tags.service';
-import { Tag } from '../tag.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Tag } from './tag.entity';
+import { TagsController } from './tags.controller';
+import { create } from 'node:domain';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
@@ -13,10 +15,16 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
   delete: jest.fn(),
 });
 
+const tagsServiceMock = {
+    create: jest.fn(),
+    delete: jest.fn(),
+    findMultipleTags: jest.fn(),
+  };
 
-describe('TagService', () => {
+
+describe('TagsController', () => {
+  let controller: TagsController;
   let service: TagsService;
-  let tagsRepository: MockRepository;
 
   const tag = {
     name: "dotnet",
@@ -35,14 +43,13 @@ describe('TagService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        TagsService,
-        { provide: getRepositoryToken(Tag), useValue: createMockRepository() },
+        controllers: [TagsController],
+        providers: [
+            { provide: TagsService, useValue: tagsServiceMock},
       ],
     }).compile();
 
-    service = module.get<TagsService>(TagsService);
-    tagsRepository = module.get(getRepositoryToken(Tag));
+    controller = module.get<TagsController>(TagsController);
   });
 
   it('Should Be Defined', () => {
@@ -52,13 +59,11 @@ describe('TagService', () => {
   describe('create', () => {
     describe('When Tag Does Not Exist', () => {
       it('Should create a new tag', async () => {
-        tagsRepository.create.mockReturnValue(tag);
-        tagsRepository.save.mockResolvedValue(tag);
+        tagsServiceMock.create.mockResolvedValue(tag);
 
-        await service.create(tag);
+        await controller.create(tag);
 
-        expect(tagsRepository.create).toHaveBeenCalledWith(tag);
-        expect(tagsRepository.save).toHaveBeenCalledWith(tag);
+        expect(tagsServiceMock.create).toHaveBeenCalledWith(tag);
       });
     });
   });
@@ -66,11 +71,11 @@ describe('TagService', () => {
   describe('delete', () => {
     describe('When Tags Exist', () => {
       it('Should delete tag', async () => {
-        tagsRepository.delete.mockReturnValue(tagNumber);
+        tagsServiceMock.delete.mockReturnValue(tagNumber);
 
-        await service.delete(tagNumber);
+        await controller.delete(tagNumber);
 
-        expect(tagsRepository.delete).toHaveBeenCalledWith(tagNumber);
+        expect(tagsServiceMock.delete).toHaveBeenCalledWith(tagNumber);
       });
     });
   });
