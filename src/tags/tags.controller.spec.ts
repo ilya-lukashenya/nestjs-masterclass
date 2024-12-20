@@ -53,7 +53,7 @@ describe('TagsController', () => {
   });
 
   it('Should Be Defined', () => {
-    expect(service).toBeDefined();
+    expect(controller).toBeDefined();
   });
 
   describe('create', () => {
