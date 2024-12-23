@@ -6,15 +6,6 @@ import { Tag } from './tag.entity';
 import { TagsController } from './tags.controller';
 import { create } from 'node:domain';
 
-type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
-const createMockRepository = <T = any>(): MockRepository<T> => ({
-  findOne: jest.fn(),
-  find: jest.fn(),
-  create: jest.fn(),
-  save: jest.fn(),
-  delete: jest.fn(),
-});
-
 const tagsServiceMock = {
     create: jest.fn(),
     delete: jest.fn(),
@@ -36,11 +27,6 @@ describe('TagsController', () => {
   };
 
   const tagNumber = 3;
-
-  const mockTags = [
-    { id: 1, name: 'javascript', slug: 'javascript', description: 'All posts javascript' },
-    { id: 3, name: 'c--', slug: 'ccc', description: 'All posts c#' },
-  ]; 
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

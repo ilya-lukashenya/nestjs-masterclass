@@ -35,7 +35,7 @@ export class PostsController {
     @Param('userId') userId: string,
     @Query() postQuery: GetPostsDto,
   ) {
-    return this.postsService.findAll(postQuery, userId);
+    return this.postsService.findAll(postQuery);
   }
 
   @ApiOperation({
