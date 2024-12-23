@@ -7,4 +7,4 @@ docker compose --project-name nest-masterclass -f ./infrastructure/docker/docker
 npm run test:e2e -- users.post
 ```
 
-The project was made according to the course: https://coursehunter.net/course/master-klass-po-nestjs-polnoe-rukovodstvo-po-bekendu-na-nodejs
+The project was made according to the course: [video lessons](https://coursehunter.net/course/master-klass-po-nestjs-polnoe-rukovodstvo-po-bekendu-na-nodejs).
